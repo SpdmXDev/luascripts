@@ -194,4 +194,4 @@ CreateSky()
     
     RequestCommand:InvokeServer(";music 3200130016")
     RequestCommand:InvokeServer(";volume inf")
-    RequestCommand:InvokeServer(";m Made By Script Atwi")
+    RequestCommand:InvokeServer(";m try atwi premium script:)")
