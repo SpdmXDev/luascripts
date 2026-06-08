@@ -1,0 +1,341 @@
+local ScreenGui = Instance.new('ScreenGui')
+local DragFrame = Instance.new('Frame')
+local MainFrame = Instance.new('Frame')
+local TabHolder = Instance.new('Frame')
+local ExeFrame = Instance.new('Frame')
+local ScriptScroll = Instance.new('ScrollingFrame')
+local ScriptBox = Instance.new('TextBox')
+local Padding = Instance.new('UIPadding')
+local ExecuteBtn = Instance.new('TextButton')
+local ClearBtn = Instance.new('TextButton')
+local ScrollBG = Instance.new('Frame')
+local ScrollBGClick = Instance.new('TextButton')
+local TitleLabel = Instance.new('TextLabel')
+local Logo = Instance.new('ImageLabel')
+local CloseFrame = Instance.new('Frame')
+local CloseBtn = Instance.new('TextButton')
+local MinFrame = Instance.new('Frame')
+local MinBtn = Instance.new('TextButton')
+local ToggleBtn = Instance.new('TextButton')
+
+ScreenGui.Name = 'Atwi Ultimate'
+ScreenGui.Parent = game:GetService('CoreGui')
+ScreenGui.ResetOnSpawn = false
+
+DragFrame.Name = 'drag'
+DragFrame.Parent = ScreenGui
+DragFrame.BackgroundColor3 = Color3.fromRGB(251, 251, 251)
+DragFrame.BorderSizePixel = 0
+DragFrame.Position = UDim2.new(0.50000006, -175, 0.5, -120)
+DragFrame.Size = UDim2.new(0, 351, 0, 25)
+DragFrame.Visible = false
+DragFrame.ZIndex = -4
+
+MainFrame.Name = 'main'
+MainFrame.Parent = DragFrame
+MainFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MainFrame.BorderColor3 = Color3.fromRGB(213, 213, 213)
+MainFrame.Position = UDim2.new(0, 0, 0, 25)
+MainFrame.Size = UDim2.new(0, 350, 0, 215)
+MainFrame.ZIndex = -4
+
+TabHolder.Name = 'tholder'
+TabHolder.Parent = MainFrame
+TabHolder.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TabHolder.BackgroundTransparency = 1
+TabHolder.BorderColor3 = Color3.fromRGB(27, 42, 53)
+TabHolder.Position = UDim2.new(0, 0, 0, 25)
+TabHolder.Size = UDim2.new(1, 0, 1, -25)
+
+ExeFrame.Name = 'exe'
+ExeFrame.Parent = TabHolder
+ExeFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ExeFrame.BackgroundTransparency = 1
+ExeFrame.BorderColor3 = Color3.fromRGB(27, 42, 53)
+ExeFrame.Position = UDim2.new(0, 2, 0, -25)
+ExeFrame.Size = UDim2.new(1.01142836, -6, 1.14736879, -6)
+
+ScriptScroll.Name = 'scriptscroll'
+ScriptScroll.Parent = ExeFrame
+ScriptScroll.Active = true
+ScriptScroll.BackgroundColor3 = Color3.fromRGB(243, 243, 243)
+ScriptScroll.BackgroundTransparency = 1
+ScriptScroll.BorderColor3 = Color3.fromRGB(227, 227, 227)
+ScriptScroll.Size = UDim2.new(0, 299, 1, 0)
+ScriptScroll.BottomImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png'
+ScriptScroll.CanvasSize = UDim2.new(0, 0, 1, 0)
+ScriptScroll.TopImage = 'rbxasset://textures/ui/Scroll/scroll-middle.png'
+
+ScriptBox.Name = 'scriptbox'
+ScriptBox.Parent = ScriptScroll
+ScriptBox.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ScriptBox.BackgroundTransparency = 1
+ScriptBox.BorderColor3 = Color3.fromRGB(227, 227, 227)
+ScriptBox.BorderSizePixel = 0
+ScriptBox.Size = UDim2.new(1.00334454, -13, 0.5, 0)
+ScriptBox.ZIndex = 2
+ScriptBox.ClearTextOnFocus = false
+ScriptBox.Font = Enum.Font.SourceSansSemibold
+ScriptBox.MultiLine = true
+ScriptBox.PlaceholderColor3 = Color3.fromRGB(150, 150, 150)
+ScriptBox.PlaceholderText = '-- print("Hello, World!")'
+ScriptBox.Text = ''
+ScriptBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+ScriptBox.TextSize = 16
+ScriptBox.TextXAlignment = Enum.TextXAlignment.Left
+ScriptBox.TextYAlignment = Enum.TextYAlignment.Top
+
+Padding.Name = 'p'
+Padding.Parent = ScriptBox
+Padding.PaddingLeft = UDim.new(0, 3)
+Padding.PaddingTop = UDim.new(0, 2)
+
+ExecuteBtn.Name = 'executebox'
+ExecuteBtn.Parent = ExeFrame
+ExecuteBtn.BackgroundColor3 = Color3.fromRGB(243, 243, 243)
+ExecuteBtn.BorderColor3 = Color3.fromRGB(227, 227, 227)
+ExecuteBtn.Position = UDim2.new(1, -44, 0, 0)
+ExecuteBtn.Size = UDim2.new(0, 40, 0, 89)
+ExecuteBtn.Font = Enum.Font.SourceSansSemibold
+ExecuteBtn.Text = 'EXE'
+ExecuteBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+ExecuteBtn.TextSize = 16
+
+ClearBtn.Name = 'clearbox'
+ClearBtn.Parent = ExeFrame
+ClearBtn.BackgroundColor3 = Color3.fromRGB(243, 243, 243)
+ClearBtn.BorderColor3 = Color3.fromRGB(227, 227, 227)
+ClearBtn.Position = UDim2.new(1, -44, 0, 95)
+ClearBtn.Size = UDim2.new(0, 40, 0, 89)
+ClearBtn.Font = Enum.Font.SourceSansSemibold
+ClearBtn.Text = 'CLR'
+ClearBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+ClearBtn.TextSize = 16
+
+ScrollBG.Name = 'bg1'
+ScrollBG.Parent = ExeFrame
+ScrollBG.Active = true
+ScrollBG.BackgroundColor3 = Color3.fromRGB(243, 243, 243)
+ScrollBG.BorderColor3 = Color3.fromRGB(227, 227, 227)
+ScrollBG.Position = UDim2.new(0, 287, 0, 0)
+ScrollBG.Selectable = true
+ScrollBG.Size = UDim2.new(0, 12, 0, 184)
+ScrollBG.ZIndex = 0
+
+ScrollBGClick.Name = 'bgclick'
+ScrollBGClick.Parent = ScrollBG
+ScrollBGClick.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ScrollBGClick.BorderColor3 = Color3.fromRGB(227, 227, 227)
+ScrollBGClick.Position = UDim2.new(0, -287, 0, 0)
+ScrollBGClick.Size = UDim2.new(0, 286, 0, 184)
+ScrollBGClick.ZIndex = 0
+ScrollBGClick.AutoButtonColor = false
+ScrollBGClick.Text = ''
+
+TitleLabel.Name = 'name'
+TitleLabel.Parent = DragFrame
+TitleLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TitleLabel.BackgroundTransparency = 1
+TitleLabel.BorderColor3 = Color3.fromRGB(27, 42, 53)
+TitleLabel.Size = UDim2.new(0.422856957, 0, 1, 0)
+TitleLabel.Font = Enum.Font.SourceSansSemibold
+TitleLabel.Text = 'Atwi Ultimate'
+TitleLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TitleLabel.TextSize = 17
+
+Logo.Parent = TitleLabel
+Logo.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Logo.BackgroundTransparency = 1
+Logo.BorderSizePixel = 0
+Logo.Position = UDim2.new(0, 0, 0.0799999982, 0)
+Logo.Size = UDim2.new(0, 21, 0, 21)
+Logo.Image = 'rbxassetid://101378401584324'
+
+CloseFrame.Name = 'ButtonX'
+CloseFrame.Parent = DragFrame
+CloseFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CloseFrame.BorderSizePixel = 0
+CloseFrame.Position = UDim2.new(1, 0, 0, 0)
+CloseFrame.Size = UDim2.new(0, -26, 0, 24)
+
+CloseBtn.Parent = CloseFrame
+CloseBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+CloseBtn.BackgroundTransparency = 1
+CloseBtn.BorderSizePixel = 0
+CloseBtn.Position = UDim2.new(1, 0, 0, 0)
+CloseBtn.Size = UDim2.new(0, -26, 0, 24)
+CloseBtn.Font = Enum.Font.ArimoBold
+CloseBtn.Text = 'X'
+CloseBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+CloseBtn.TextSize = 22
+
+MinFrame.Name = 'ButtonMin'
+MinFrame.Parent = DragFrame
+MinFrame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MinFrame.BorderSizePixel = 0
+MinFrame.Position = UDim2.new(0.910000026, 0, 0, 0)
+MinFrame.Size = UDim2.new(0, -26, 0, 24)
+
+MinBtn.Parent = MinFrame
+MinBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+MinBtn.BackgroundTransparency = 1
+MinBtn.BorderSizePixel = 0
+MinBtn.Position = UDim2.new(1, 0, 0, 0)
+MinBtn.Size = UDim2.new(0, -26, 0, 24)
+MinBtn.Font = Enum.Font.ArimoBold
+MinBtn.Text = '-'
+MinBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+MinBtn.TextSize = 22
+
+ToggleBtn.Name = 'toggle'
+ToggleBtn.Parent = ScreenGui
+ToggleBtn.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ToggleBtn.BorderSizePixel = 0
+ToggleBtn.Position = UDim2.new(0, 1, 1, -26)
+ToggleBtn.Size = UDim2.new(0, 125, 0, 25)
+ToggleBtn.Font = Enum.Font.ArimoBold
+ToggleBtn.Text = 'Atwi Ultimate'
+ToggleBtn.TextColor3 = Color3.fromRGB(84, 84, 84)
+ToggleBtn.TextSize = 15
+
+coroutine.wrap(function()
+    local netSignal = nil
+    local success, result = pcall(function()
+        return game:GetService('ReplicatedStorage'):WaitForChild('a3e52c7b-5cb2-4f35-8ae4-dc9e77f86b82', 2)
+    end)
+
+    if success and result then
+        task.wait(0.2)
+        print('yippee they found it!')
+        netSignal = result
+    else
+        warn('aw dang it the infector isnt here or doesnt exist')
+    end
+
+    ExecuteBtn.MouseButton1Click:Connect(function()
+        if netSignal then
+            netSignal:InvokeServer('_netSignalCore', ScriptBox.Text)
+        end
+    end)
+end)()
+
+coroutine.wrap(function()
+    ClearBtn.MouseButton1Click:Connect(function()
+        ScriptBox.Text = ''
+    end)
+end)()
+
+coroutine.wrap(function()
+    local UIS = game:GetService('UserInputService')
+    local dragging = false
+    local dragStart = nil
+    local startPos = nil
+
+    local function updateDrag(input)
+        local delta = input.Position - dragStart
+        DragFrame.Position = UDim2.new(
+            startPos.X.Scale,
+            startPos.X.Offset + delta.X,
+            startPos.Y.Scale,
+            startPos.Y.Offset + delta.Y
+        )
+    end
+
+    DragFrame.InputBegan:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseButton1
+        or input.UserInputType == Enum.UserInputType.Touch then
+            dragging = true
+            dragStart = input.Position
+            startPos = DragFrame.Position
+            input.Changed:Connect(function()
+                if input.UserInputState == Enum.UserInputState.End then
+                    dragging = false
+                end
+            end)
+        end
+    end)
+
+    local lastInput = nil
+    DragFrame.InputChanged:Connect(function(input)
+        if input.UserInputType == Enum.UserInputType.MouseMovement
+        or input.UserInputType == Enum.UserInputType.Touch then
+            lastInput = input
+        end
+    end)
+
+    UIS.InputChanged:Connect(function(input)
+        if input == lastInput and dragging then
+            updateDrag(input)
+        end
+    end)
+end)()
+
+coroutine.wrap(function()
+    local TweenService = game:GetService('TweenService')
+    local tweenTime = 0.2
+    local originalBG = CloseFrame.Parent.BackgroundColor3
+    local originalText = CloseBtn.TextColor3
+    local activeTweens = {}
+
+    local function createTweens(bgColor, textColor)
+        local info = TweenInfo.new(tweenTime, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+        return {
+            TweenService:Create(CloseFrame.Parent, info, {BackgroundColor3 = bgColor}),
+            TweenService:Create(CloseBtn, info, {TextColor3 = textColor}),
+        }
+    end
+
+    CloseBtn.MouseEnter:Connect(function()
+        for _, t in pairs(activeTweens) do t:Cancel() end
+        activeTweens = createTweens(Color3.fromRGB(255, 0, 0), Color3.new(1, 1, 1))
+        for _, t in pairs(activeTweens) do t:Play() end
+    end)
+
+    CloseBtn.MouseLeave:Connect(function()
+        for _, t in pairs(activeTweens) do t:Cancel() end
+        activeTweens = createTweens(originalBG, originalText)
+        for _, t in pairs(activeTweens) do t:Play() end
+    end)
+
+    CloseBtn.MouseButton1Click:Connect(function()
+        DragFrame.Visible = false
+        ToggleBtn.Visible = true
+    end)
+end)()
+
+coroutine.wrap(function()
+    local TweenService = game:GetService('TweenService')
+    local tweenTime = 0.2
+    local minimized = true
+    local originalBG = MinFrame.Parent.BackgroundColor3
+    local activeTweens = {}
+
+    local function createTweens(bgColor)
+        local info = TweenInfo.new(tweenTime, Enum.EasingStyle.Quad, Enum.EasingDirection.Out)
+        return {TweenService:Create(MinFrame.Parent, info, {BackgroundColor3 = bgColor})}
+    end
+
+    MinBtn.MouseEnter:Connect(function()
+        for _, t in pairs(activeTweens) do t:Cancel() end
+        activeTweens = createTweens(Color3.fromRGB(193, 193, 193))
+        for _, t in pairs(activeTweens) do t:Play() end
+    end)
+
+    MinBtn.MouseLeave:Connect(function()
+        for _, t in pairs(activeTweens) do t:Cancel() end
+        activeTweens = createTweens(originalBG)
+        for _, t in pairs(activeTweens) do t:Play() end
+    end)
+
+    MinBtn.MouseButton1Click:Connect(function()
+        MainFrame.Visible = minimized
+        minimized = not minimized
+    end)
+end)()
+
+coroutine.wrap(function()
+    ToggleBtn.MouseButton1Click:Connect(function()
+        ToggleBtn.Visible = false
+        DragFrame.Visible = true
+    end)
+end)()
