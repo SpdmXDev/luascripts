@@ -1,0 +1,248 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local SoundService = game:GetService("SoundService")
+local StarterGui = game:GetService("StarterGui")
+local LocalPlayer = Players.LocalPlayer
+local TrackedPlayers = {}
+local SessionStart = tick()
+
+local function FormatTime(seconds)
+    local hours = math.floor(seconds / 3600)
+    local mins = math.floor(seconds % 3600 / 60)
+    local secs = math.floor(seconds % 60)
+    return string.format("%02d:%02d:%02d", hours, mins, secs)
+end
+
+local NotifSound = Instance.new("Sound", SoundService)
+NotifSound.SoundId = "rbxassetid://9118823104"
+NotifSound.Volume = 3
+
+local ScreenGui = Instance.new("ScreenGui", game.CoreGui)
+ScreenGui.Name = "AdvancedTracker"
+
+local ToggleBtn = Instance.new("TextButton", ScreenGui)
+ToggleBtn.Size = UDim2.new(0, 45, 0, 45)
+ToggleBtn.Position = UDim2.new(0, 10, 0.5, -20)
+ToggleBtn.Text = "Atwi"
+ToggleBtn.TextScaled = true
+ToggleBtn.Font = Enum.Font.SourceSansBold
+ToggleBtn.ZIndex = 10
+Instance.new("UICorner", ToggleBtn).CornerRadius = UDim.new(1, 0)
+
+local MainFrame = Instance.new("Frame", ScreenGui)
+MainFrame.Size = UDim2.new(0, 500, 0, 380)
+MainFrame.Position = UDim2.new(0.5, -250, 0.5, -210)
+MainFrame.BorderSizePixel = 0
+MainFrame.Visible = false
+MainFrame.Active = true
+MainFrame.Draggable = false
+
+local TitleLabel = Instance.new("TextLabel", MainFrame)
+TitleLabel.Size = UDim2.new(1, 0, 0, 40)
+TitleLabel.Text = "احتساب النقاط"
+TitleLabel.TextScaled = true
+TitleLabel.Font = Enum.Font.GothamBold
+
+local CreatorLabel = Instance.new("TextLabel", MainFrame)
+CreatorLabel.Size = UDim2.new(1, 0, 0, 20)
+CreatorLabel.Position = UDim2.new(0, 0, 0, 40)
+CreatorLabel.BackgroundTransparency = 1
+CreatorLabel.Text = "by atwi"
+CreatorLabel.TextScaled = true
+CreatorLabel.Font = Enum.Font.GothamBold
+
+local TimerLabel = Instance.new("TextLabel", MainFrame)
+TimerLabel.Position = UDim2.new(0, 0, 0, 65)
+TimerLabel.Size = UDim2.new(1, 0, 0, 30)
+TimerLabel.Text = "مدتك بالسيرفر: 00:00:00"
+TimerLabel.BackgroundTransparency = 1
+TimerLabel.TextScaled = true
+TimerLabel.Font = Enum.Font.SourceSansBold
+
+local SearchBox = Instance.new("TextBox", MainFrame)
+SearchBox.Size = UDim2.new(0.7, -10, 0, 35)
+SearchBox.Position = UDim2.new(0.05, 0, 0, 110)
+SearchBox.PlaceholderText = "اكتب اسم لاعب"
+SearchBox.TextScaled = true
+SearchBox.Font = Enum.Font.Gotham
+
+local SearchBtn = Instance.new("TextButton", MainFrame)
+SearchBtn.Size = UDim2.new(0.2, 0, 0, 35)
+SearchBtn.Position = UDim2.new(0.75, 0, 0, 110)
+SearchBtn.Text = "ابدأ"
+SearchBtn.TextScaled = true
+SearchBtn.Font = Enum.Font.GothamBold
+
+local PlayerList = Instance.new("ScrollingFrame", MainFrame)
+PlayerList.Size = UDim2.new(1, -20, 0, 230)
+PlayerList.Position = UDim2.new(0, 10, 0, 150)
+PlayerList.BackgroundTransparency = 1
+PlayerList.CanvasSize = UDim2.new(0, 0, 0, 0)
+PlayerList.ScrollBarThickness = 6
+
+local ListLayout = Instance.new("UIListLayout", PlayerList)
+ListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+ListLayout.Padding = UDim.new(0, 4)
+
+ListLayout:GetPropertyChangedSignal("AbsoluteContentSize"):Connect(function()
+    PlayerList.CanvasSize = UDim2.new(0, 0, 0, ListLayout.AbsoluteContentSize.Y)
+    PlayerList.CanvasPosition = Vector2.new(0, ListLayout.AbsoluteContentSize.Y)
+end)
+
+local function TrackPlayer(player)
+    local userId = player.UserId
+
+    if TrackedPlayers[userId] then return end
+
+    local data = {
+        Entered = 0,
+        Exited = 0,
+        TotalTime = 0,
+        JoinTime = tick(),
+        Instance = nil,
+    }
+
+    local PlayerCard = Instance.new("Frame")
+    PlayerCard.Size = UDim2.new(1, 0, 0, 60)
+    PlayerCard.BorderSizePixel = 0
+
+    local AvatarImg = Instance.new("ImageLabel", PlayerCard)
+    AvatarImg.Size = UDim2.new(0, 50, 0, 50)
+    AvatarImg.Position = UDim2.new(0, 5, 0, 5)
+    AvatarImg.Image = "https://www.roblox.com/headshot-thumbnail/image?userId=" .. userId .. "&width=150&height=150&format=png"
+    AvatarImg.BackgroundTransparency = 1
+
+    local NameLabel = Instance.new("TextLabel", PlayerCard)
+    NameLabel.Position = UDim2.new(0, 60, 0, 5)
+    NameLabel.Size = UDim2.new(0.5, 0, 0, 20)
+    NameLabel.Text = player.Name
+    NameLabel.BackgroundTransparency = 1
+    NameLabel.TextScaled = true
+    NameLabel.Font = Enum.Font.SourceSansBold
+
+    local InfoLabel = Instance.new("TextLabel", PlayerCard)
+    InfoLabel.Name = "InfoLabel"
+    InfoLabel.Position = UDim2.new(0, 60, 0, 30)
+    InfoLabel.Size = UDim2.new(0.6, 0, 0, 20)
+    InfoLabel.BackgroundTransparency = 1
+    InfoLabel.TextScaled = true
+    InfoLabel.Font = Enum.Font.SourceSans
+    InfoLabel.Text = "دخول: 0 | خروج: 0 | مدة: 00:00:00"
+
+    local DeleteBtn = Instance.new("TextButton", PlayerCard)
+    DeleteBtn.Size = UDim2.new(0, 30, 0, 30)
+    DeleteBtn.Position = UDim2.new(1, -35, 0.5, -15)
+    DeleteBtn.Text = "X"
+    DeleteBtn.TextScaled = true
+    DeleteBtn.Font = Enum.Font.SourceSansBold
+
+    DeleteBtn.MouseButton1Click:Connect(function()
+        PlayerCard:Destroy()
+        TrackedPlayers[userId] = nil
+    end)
+
+    local CopyBtn = Instance.new("TextButton", PlayerCard)
+    CopyBtn.Size = UDim2.new(0, 30, 0, 30)
+    CopyBtn.Position = UDim2.new(1, -70, 0.5, -15)
+    CopyBtn.Text = "CP"
+    CopyBtn.TextScaled = true
+    CopyBtn.Font = Enum.Font.SourceSansBold
+
+    CopyBtn.MouseButton1Click:Connect(function()
+        local totalTime = data.TotalTime
+        if data.JoinTime then
+            totalTime = totalTime + tick() - data.JoinTime
+        end
+
+        local copyText = string.format("%s: مدة البقاء %s  دخول %d  خروج %d",
+            player.Name, FormatTime(totalTime), data.Entered, data.Exited)
+
+        local success, err = pcall(function()
+            if setclipboard then
+                setclipboard(copyText)
+                StarterGui:SetCore("SendNotification", {
+                    Title = "تم النسخ",
+                    Text = "تم نسخ المعلومات تلقائياً إلى الحافظة.",
+                    Duration = 4,
+                })
+            else
+                StarterGui:SetCore("SendNotification", {
+                    Title = "نسخ غير مدعوم",
+                    Text = "جهازك لا يدعم النسخ التلقائي",
+                    Duration = 3,
+                })
+            end
+        end)
+
+        if not success then
+            StarterGui:SetCore("SendNotification", {
+                Title = "خطأ في النسخ",
+                Text = err or "حدث خطأ غير معروف",
+                Duration = 4,
+            })
+        end
+    end)
+
+    data.Instance = PlayerCard
+    TrackedPlayers[userId] = data
+    PlayerCard.Parent = PlayerList
+
+    NotifSound:Play()
+end
+
+SearchBtn.MouseButton1Click:Connect(function()
+    local searchText = SearchBox.Text:lower()
+    for _, player in ipairs(Players:GetPlayers()) do
+        if player.Name:lower():find(searchText) and not TrackedPlayers[player.UserId] then
+            TrackPlayer(player)
+            break
+        end
+    end
+end)
+
+RunService.RenderStepped:Connect(function()
+    TimerLabel.Text = "مدة بقائك: " .. FormatTime(tick() - SessionStart)
+
+    for userId, data in pairs(TrackedPlayers) do
+        local isOnline = Players:GetPlayerByUserId(userId) ~= nil
+        local totalTime = data.TotalTime
+
+        if isOnline and data.JoinTime then
+            totalTime = totalTime + tick() - data.JoinTime
+        end
+
+        local infoLabel = data.Instance:FindFirstChild("InfoLabel")
+        if infoLabel then
+            infoLabel.Text = "دخول: " .. data.Entered .. " | خروج: " .. data.Exited .. " | مدة: " .. FormatTime(totalTime)
+        end
+    end
+end)
+
+Players.PlayerAdded:Connect(function(player)
+    local userId = player.UserId
+    if TrackedPlayers[userId] then
+        local data = TrackedPlayers[userId]
+        if not data.JoinTime then
+            data.Entered = data.Entered + 1
+            data.JoinTime = tick()
+            NotifSound:Play()
+        end
+    end
+end)
+
+Players.PlayerRemoving:Connect(function(player)
+    local userId = player.UserId
+    if TrackedPlayers[userId] then
+        local data = TrackedPlayers[userId]
+        if data.JoinTime then
+            data.Exited = data.Exited + 1
+            data.TotalTime = data.TotalTime + tick() - data.JoinTime
+            data.JoinTime = nil
+            NotifSound:Play()
+        end
+    end
+end)
+
+ToggleBtn.MouseButton1Click:Connect(function()
+    MainFrame.Visible = not MainFrame.Visible
+end)
