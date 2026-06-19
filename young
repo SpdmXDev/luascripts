@@ -30,7 +30,7 @@ Text.Position = UDim2.new(0.0, 0, 0.0, 0)
 Text.BackgroundColor3 = Color3.new(0, 0, 0)
 Text.BorderColor3 = Color3.new(0, 0, 0)
 Text.BorderSizePixel = 1
-Text.Text = "yong Shelon gui 00de0l upd"
+Text.Text = "yong Shelon gui"
 Text.BackgroundTransparency = 1
 Text.TextColor3 = Color3.new(0, 0, 0)
 Text.Font = Enum.Font.Highway
@@ -331,7 +331,7 @@ lel.Size = UDim2.new(0.0, 108, 0.0, 108)
 lel.Position = UDim2.new(-0.127000004, 0, 0.407999992, 0)
 lel.BackgroundColor3 = Color3.new(0, 0, 0)
 lel.ImageColor3 = Color3.new(1, 1, 1)
-lel.Image = "rbxassetid://86102463824382"
+lel.Image = "rbxassetid://"
 lel.ImageTransparency = 0
 lel.Parent = gui
  
@@ -342,7 +342,7 @@ Ring.Size = UDim2.new(1.0, 0, 1.0, 0)
 Ring.Position = UDim2.new(0.0, 0, 0.0, 0)
 Ring.BackgroundColor3 = Color3.new(0, 0, 0)
 Ring.ImageColor3 = Color3.new(1, 1, 1)
-Ring.Image = "rbxassetid://126506133083228"
+Ring.Image = "rbxassetid://"
 Ring.ImageTransparency = 0
 Ring.Parent = lel
  
